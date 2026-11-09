@@ -1,0 +1,7 @@
+target/
+node_modules/
+.solana-auditor/
+.audit-*/
+x-ray/
+*.log
+.DS_Store

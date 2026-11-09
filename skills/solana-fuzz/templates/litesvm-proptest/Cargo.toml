@@ -1,0 +1,29 @@
+# LiteSVM + proptest harness template (see ../../references/litesvm-proptest.md).
+# Version pins match: Anchor 0.32.1, Solana/Agave 2.3 line, Rust >= 1.86.
+#  - litesvm 0.7.x depends on Agave ^2.3 crates (0.8+ moves to Agave 3.0; do not mix).
+#  - litesvm-token 0.7.x matches litesvm 0.7.x and spl-token 8.
+#  - proptest is capped at 1.10 so it builds on Rust 1.84+ (1.12 needs 1.88).
+# Re-check these pins on crates.io before use; they are accurate as of 2026-10-30.
+# Standalone crate (not a member of the program workspace): the test stack resolves its own
+# solana-* versions and must not fight the program's pinned anchor-lang / solana-program.
+[workspace]
+
+[package]
+name = "program-properties"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+
+[dev-dependencies]
+litesvm = "=0.7.1"
+litesvm-token = "=0.7.1"
+solana-sdk = "~2.3"
+proptest = "=1.10.0"
+# The program crate under test, only if you want its instruction builders / account types:
+# my-program = { path = "../programs/my-program", features = ["no-entrypoint"] }
+# anchor-lang = "=0.32.1"
+
+[profile.dev]
+opt-level = 1   # property tests run thousands of cases; keep the model math fast
